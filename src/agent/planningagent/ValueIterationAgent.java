@@ -99,22 +99,29 @@ public class ValueIterationAgent extends PlanningValueAgent {
 
 			}
 
-			if (!mdp.estAbsorbant(e)) nouveauV.put(e, meilleureAction);
+			if (!mdp.estAbsorbant(e)) { nouveauV.put(e, meilleureAction); }
 
 		}
 
-		v = nouveauV;
 		//mise a jour de delta
 		//convergence
+		Double deltaTmp;
+		Double ancienneV = 0.0;
+		Double nouvelleV = 0.0;
 
-		/*for(Etat e : etats) {
+		for (Etat e : etats ) {
+			ancienneV = getValeur(e);
+			if (nouveauV.get(e) != null) nouvelleV = nouveauV.get(e);
+			deltaTmp = Math.abs(ancienneV - nouvelleV);
 
-			Double convergence = Math.abs(getValeur(e) - nouveauV.get(e));
-
-			if(this.delta < convergence) {
-				this.delta = convergence;
+			if (this.delta < deltaTmp) {
+				this.delta = deltaTmp;
 			}
-		}*/
+		}
+
+		v = nouveauV;
+
+
 
 		// mise a jour vmax et vmin pour affichage du gradient de couleur:
 		//vmax est la valeur de max pour tout s de V
